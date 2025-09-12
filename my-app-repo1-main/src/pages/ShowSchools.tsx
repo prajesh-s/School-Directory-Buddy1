@@ -2,18 +2,19 @@ import { useState, useEffect } from "react"
 import { supabase } from "@/integrations/supabase/client"
 import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
-import { MapPin, Phone, Mail } from "lucide-react"
+import { MapPin, Phone, Mail, Lock } from "lucide-react"
 import Navigation from "@/components/Navigation"
+import { useAuth } from "@/contexts/AuthContext"
 
-// School type definition
+// School type definition - contact info optional for public view
 type School = {
   id: number
   name: string
   address: string
   city: string
   state: string
-  contact: string
-  email_id: string
+  contact?: string
+  email_id?: string
   image: string | null
   created_at: string
 }
@@ -21,21 +22,30 @@ type School = {
 const ShowSchools = () => {
   const [schools, setSchools] = useState<School[]>([])
   const [loading, setLoading] = useState(true)
+  const { user } = useAuth()
 
   useEffect(() => {
     fetchSchools()
-  }, [])
+  }, [user])
 
   const fetchSchools = async () => {
     try {
-      const { data, error } = await supabase
-        .from('schools')
-        .select('*')
-        .order('created_at', { ascending: false })
-        
-      if (error) throw error
-      
-      setSchools(data || [])
+      if (user) {
+        // Authenticated users get full data including contact info
+        const { data, error } = await supabase
+          .from('schools')
+          .select('*')
+          .order('created_at', { ascending: false })
+          
+        if (error) throw error
+        setSchools(data || [])
+      } else {
+        // Public users get limited data without contact info
+        const { data, error } = await supabase.rpc('get_public_schools')
+          
+        if (error) throw error
+        setSchools(data || [])
+      }
     } catch (error) {
       console.error('Error fetching schools:', error)
     } finally {
@@ -75,6 +85,14 @@ const ShowSchools = () => {
           <p className="text-muted-foreground">
             Discover schools in your area - {schools.length} schools found
           </p>
+          {!user && (
+            <div className="mt-4 p-3 bg-muted rounded-lg">
+              <div className="flex items-center justify-center gap-2 text-sm text-muted-foreground">
+                <Lock className="h-4 w-4" />
+                <span>Contact information is protected. <a href="/auth" className="text-primary hover:underline">Sign in</a> to view phone numbers and emails.</span>
+              </div>
+            </div>
+          )}
         </div>
 
         {schools.length === 0 ? (
@@ -115,25 +133,33 @@ const ShowSchools = () => {
                     {school.name}
                   </h3>
                   
-                  <div className="space-y-2 text-sm">
-                    <div className="flex items-start gap-2">
-                      <MapPin className="h-4 w-4 mt-0.5 text-muted-foreground flex-shrink-0" />
-                      <div>
-                        <p className="line-clamp-1" title={school.address}>{school.address}</p>
-                        <p className="text-muted-foreground">{school.city}, {school.state}</p>
-                      </div>
-                    </div>
-                    
-                    <div className="flex items-center gap-2">
-                      <Phone className="h-4 w-4 text-muted-foreground flex-shrink-0" />
-                      <p className="line-clamp-1" title={school.contact}>{school.contact}</p>
-                    </div>
-                    
-                    <div className="flex items-center gap-2">
-                      <Mail className="h-4 w-4 text-muted-foreground flex-shrink-0" />
-                      <p className="line-clamp-1" title={school.email_id}>{school.email_id}</p>
-                    </div>
-                  </div>
+                   <div className="space-y-2 text-sm">
+                     <div className="flex items-start gap-2">
+                       <MapPin className="h-4 w-4 mt-0.5 text-muted-foreground flex-shrink-0" />
+                       <div>
+                         <p className="line-clamp-1" title={school.address}>{school.address}</p>
+                         <p className="text-muted-foreground">{school.city}, {school.state}</p>
+                       </div>
+                     </div>
+                     
+                     <div className="flex items-center gap-2">
+                       <Phone className="h-4 w-4 text-muted-foreground flex-shrink-0" />
+                       {school.contact ? (
+                         <p className="line-clamp-1" title={school.contact}>{school.contact}</p>
+                       ) : (
+                         <p className="text-muted-foreground italic">Sign in to view contact</p>
+                       )}
+                     </div>
+                     
+                     <div className="flex items-center gap-2">
+                       <Mail className="h-4 w-4 text-muted-foreground flex-shrink-0" />
+                       {school.email_id ? (
+                         <p className="line-clamp-1" title={school.email_id}>{school.email_id}</p>
+                       ) : (
+                         <p className="text-muted-foreground italic">Sign in to view email</p>
+                       )}
+                     </div>
+                   </div>
                 </CardContent>
               </Card>
             ))}

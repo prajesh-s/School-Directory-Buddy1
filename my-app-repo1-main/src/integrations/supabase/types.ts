@@ -55,7 +55,18 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      get_public_schools: {
+        Args: Record<PropertyKey, never>
+        Returns: {
+          address: string
+          city: string
+          created_at: string
+          id: number
+          image: string
+          name: string
+          state: string
+        }[]
+      }
     }
     Enums: {
       [_ in never]: never
