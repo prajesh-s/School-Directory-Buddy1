@@ -37,17 +37,16 @@ Shadcn UI
 📦 Getting Started
 1. Clone the Repository
 git clone https://github.com/prajesh-s/School-Directory-Buddy1.git
+
 cd School-Directory-Buddy1
 
-2. Install Dependencies
+3. Install Dependencies
 npm install
 
-3. Run the Project Locally
+4. Run the Project Locally
 npm run dev
 
 
-The app will be available at:
-👉 http://localhost:5173
 
 🔐 Authentication Flow
 
