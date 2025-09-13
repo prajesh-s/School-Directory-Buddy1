@@ -1,73 +1,81 @@
-# Welcome to your Lovable project
+School Directory Buddy
 
-## Project info
+A school management web application built with Vite, React, TypeScript, Supabase, Tailwind CSS, and Shadcn UI.
+This project demonstrates handling authentication and security with Email OTP login and protecting sensitive operations such as adding or editing schools.
 
-**URL**: https://lovable.dev/projects/bcfb4493-fde8-41bd-9954-f739a0417b3b
+🚀 Features
 
-## How can I edit this code?
+Publicly view all schools.
 
-There are several ways of editing your application.
+Email OTP authentication (6-digit code, expires in 10 minutes).
 
-**Use Lovable**
+Sign Up / Sign In toggle for new and existing users.
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/bcfb4493-fde8-41bd-9954-f739a0417b3b) and start prompting.
+Only authenticated users can add, edit, or manage schools.
 
-Changes made via Lovable will be committed automatically to this repo.
+Secure route protection using Supabase sessions.
 
-**Use your preferred IDE**
+Modern UI built with TailwindCSS and Shadcn UI.
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+🛠️ Tech Stack
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+React + Vite
+ — Frontend framework
 
-Follow these steps:
+TypeScript
+ — Type safety
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+Supabase
+ — Database & Authentication (Email OTP)
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+TailwindCSS
+ — Styling
 
-# Step 3: Install the necessary dependencies.
-npm i
+Shadcn UI
+ — UI components
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
+📦 Getting Started
+1. Clone the Repository
+git clone https://github.com/prajesh-s/School-Directory-Buddy1.git
+cd School-Directory-Buddy1
+
+2. Install Dependencies
+npm install
+
+3. Run the Project Locally
 npm run dev
-```
 
-**Edit a file directly in GitHub**
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+The app will be available at:
+👉 http://localhost:5173
 
-**Use GitHub Codespaces**
+🔐 Authentication Flow
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+Sign Up with your email → receive a 6-digit OTP.
 
-## What technologies are used for this project?
+Enter the OTP within 10 minutes to activate your session.
 
-This project is built with:
+Sign In works the same way for existing users.
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+Only logged-in users can access “Add/Edit School” pages.
 
-## How can I deploy this project?
+🌍 Deployment
 
-Simply open [Lovable](https://lovable.dev/projects/bcfb4493-fde8-41bd-9954-f739a0417b3b) and click on Share -> Publish.
+The project is deployed on Vercel:
+👉 Live Demo link:https://school-directory-buddy1.vercel.app/
 
-## Can I connect a custom domain to my Lovable project?
+📖 Assignment Notes
 
-Yes, you can!
+This project is the Step 2 submission for the Web Developer Assignment.
+It extends the original School Management App by adding:
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
+Email OTP authentication
 
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
+Route protection for school management
+
+Clean, user-friendly authentication flow
+
+👨‍💻 Author
+
+Prajesh S
+GitHub Profile
