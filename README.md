@@ -5,7 +5,7 @@ This project demonstrates handling authentication and security with Email OTP lo
 
 🚀 Features
 
-Publicly view all schools (no login required).
+Publicly view all schools.
 
 Email OTP authentication (6-digit code, expires in 10 minutes).
 
